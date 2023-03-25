@@ -1,5 +1,6 @@
 // Inlined / shortened version of `kindOf` from https://github.com/jonschlinkert/kind-of
 export function miniKindOf(val: any): string {
+  // 基础类型
   if (val === void 0) return 'undefined'
   if (val === null) return 'null'
 
@@ -14,6 +15,7 @@ export function miniKindOf(val: any): string {
     }
   }
 
+  // 复杂类型
   if (Array.isArray(val)) return 'array'
   if (isDate(val)) return 'date'
   if (isError(val)) return 'error'

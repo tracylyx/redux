@@ -39,6 +39,7 @@ import { kindOf } from './utils/kindOf'
  * `import { legacy_createStore as createStore} from 'redux'`
  *
  */
+/// createStore接收三个参数：reducer函数、preloadedState（可选）、enhancer（可选）
 export function createStore<
   S,
   A extends Action,
@@ -93,6 +94,8 @@ export function createStore<
   preloadedState?: PreloadedState<S> | StoreEnhancer<Ext, StateExt>,
   enhancer?: StoreEnhancer<Ext, StateExt>
 ): Store<S, A, StateExt> & Ext {
+  /// 辅助的条件判断
+  /// reducer必须要是个函数类型，否则抛出error
   if (typeof reducer !== 'function') {
     throw new Error(
       `Expected the root reducer to be a function. Instead, received: '${kindOf(
@@ -126,6 +129,9 @@ export function createStore<
       )
     }
 
+    /// [ɪnˈhæns] enhance 增强
+    /// createStore函数，返回 enhancer 函数返回的内容
+    /// enhancer 由外部传入给createStore函数
     return enhancer(createStore)(
       reducer,
       preloadedState as PreloadedState<S>
